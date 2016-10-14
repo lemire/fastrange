@@ -1,4 +1,7 @@
 /**
+* Fair maps to intervals without division.
+* Reference : http://lemire.me/blog/2016/06/27/a-fast-alternative-to-the-modulo-reduction/
+*
 * (c) Daniel Lemire
 * Apache License 2.0
 */
@@ -45,7 +48,7 @@ static inline uint64_t fastrange64(uint64_t word, uint64_t p) {
 		unsigned __int64 *HighProduct
 	);
 #else
-	return word % p; // fallback      
+	return word % p; // fallback
 #endif // __SIZEOF_INT128__
 }
 
@@ -61,7 +64,7 @@ static inline uint64_t fastrange64(uint64_t word, uint64_t p) {
 * possible outputs as uniformly as possible.
 */
 static inline size_t fastrangesize(size_t word, size_t p) {
-#if (SIZE_MAX == UINT32_MAX) 
+#if (SIZE_MAX == UINT32_MAX)
 	return (size_t)fastrange32(word, p);
 #else // assume 64-bit
 	return (size_t)fastrange64(word, p);
