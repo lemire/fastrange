@@ -30,4 +30,7 @@ uint32_t fastrange32(uint32_t word, uint32_t p);
 uint64_t fastrange64(uint64_t word, uint64_t p);
 size_t fastrangesize(size_t word, size_t p);
 int fastrangeint(int word, int p);
-``
+```
+
+On most system, the header will define the ``FASTRANGE64`` macro to indicate
+that 64-bit words are supported. 
