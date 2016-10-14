@@ -32,5 +32,3 @@ size_t fastrangesize(size_t word, size_t p);
 int fastrangeint(int word, int p);
 ```
 
-On most system, the header will define the ``FASTRANGE64`` macro to indicate
-that 64-bit words are supported. 

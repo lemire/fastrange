@@ -4,7 +4,7 @@
 
 
 all: tests.c
-	$(CC) -o tests tests.c
+	$(CC) -o tests tests.c -Wall -Wextra
 
 clean:
 	rm -f *.o tests
