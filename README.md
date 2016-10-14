@@ -25,7 +25,7 @@ This library provides a single portable header file that you should
 be able to just drop in your C/C++ projects. The API is simple:
 
 
-```
+```C
 #include "fastrange"
 
 // given a value word, produces an integer in [0,p) without division
