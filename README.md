@@ -34,3 +34,6 @@ uint64_t fastrange64(uint64_t word, uint64_t p);
 size_t fastrangesize(size_t word, size_t p);
 int fastrangeint(int word, int p);
 ```
+## Pre-conditions
+
+For this code to give the desired result, the provided words should span the whole range (e.g., all 32-bit integers). However, the underlying idea is general: we only require that the word values span an interval of the form ``[0,1<<L)``. It suffices then to do `` ( x * range ) >> L `` to get a fair map from ``[0,1<<L)`` to ``[0,range)``. For example, if your word values span the interval [0,65536), then you could simply do ``( x * range ) >> 16``.
