@@ -36,7 +36,21 @@ int fastrangeint(int word, int p);
 ```
 ## Pre-conditions
 
-For this code to give the desired result, the provided words should span the whole range (e.g., all 32-bit integers). However, the underlying idea is general: we only require that the word values span an interval of the form ``[0,1<<L)``. It suffices then to do `` ( x * range ) >> L `` to get a fair map from ``[0,1<<L)`` to ``[0,range)``. For example, if your word values span the interval [0,65536), then you could simply do ``( x * range ) >> 16``.
+For this code to give the desired result, the provided words should span the whole range (e.g., all 32-bit integers). The C ``rand`` function does not meet this requirement. If you must use the ``rand``  function, wrap it like so:
+
+```
+uint32_t get32rand() {
+    return (((uint32_t)rand() << 0) & 0x0000FFFFul) |
+           (((uint32_t)rand() << 16) & 0xFFFF0000ul);
+}
+
+uint64_t get64rand() {
+    return (((uint64_t)get32rand()) << 32) | get32rand();
+}
+```
+
+
+However, the underlying idea is general: we only require that the word values span an interval of the form ``[0,1<<L)``. It suffices then to do `` ( x * range ) >> L `` to get a fair map from ``[0,1<<L)`` to ``[0,range)``. For example, if your word values span the interval [0,65536), then you could simply do ``( x * range ) >> 16``.
 
 
 ## Unbiased range functions
