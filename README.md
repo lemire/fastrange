@@ -40,8 +40,7 @@ For this code to give the desired result, the provided words should span the who
 
 ```
 uint32_t get32rand() {
-    return (((uint32_t)rand() << 0) & 0x0000FFFFul) |
-           (((uint32_t)rand() << 16) & 0xFFFF0000ul);
+    return (rand() ^ (rand() << 15) ^ (rand() << 30));
 }
 
 uint64_t get64rand() {
