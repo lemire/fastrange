@@ -21,6 +21,11 @@ It has accelerated some operations in Google's Tensorflow by 10% to 20%
 Further reading : http://lemire.me/blog/2016/06/27/a-fast-alternative-to-the-modulo-reduction/
 
 
+See also:
+
+* Daniel Lemire, [Fast Random Integer Generation in an Interval](https://arxiv.org/abs/1805.10941), ACM Transactions on Modeling and Computer Simulation (to appear)
+
+
 This library provides a single portable header file that you should
 be able to just drop in your C/C++ projects. The API is simple:
 
