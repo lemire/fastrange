@@ -7,6 +7,8 @@ equally likely then, as much as possible, all integer values in
 [0,p) are (almost) equally likely. This is common in hashing and probabilistic
 algorithms.
 
+In computing, the modulo operation finds the remainder after division of one number by another (called the modulus of the operation). Given two positive numbers, a and n, a modulo n (abbreviated as a mod n) is the remainder of the Euclidean division of a by n, where a is the dividend and n is the divisor.
+
 The standard approach to this problem is the modulo reduction (``x % p``).
 Though a modulo reduction works fine and has several nice properties,
 it can be slow even on recent processors because it relies on an
