@@ -17,8 +17,7 @@ integer division.
 Thankfully, there is a faster way: we can replace the modulo by a multiplication
 followed by a shift.
 
-It has accelerated some operations in Google's Tensorflow by 10% to 20%
-(https://github.com/tensorflow/tensorflow/commit/a47a300185026fe7829990def9113bf3a5109fed).
+[It has accelerated some operations in Google's Tensorflow by 10% to 20%](https://github.com/tensorflow/tensorflow/commit/a47a300185026fe7829990def9113bf3a5109fed).
 
 Further reading : http://lemire.me/blog/2016/06/27/a-fast-alternative-to-the-modulo-reduction/
 
