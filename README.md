@@ -24,7 +24,7 @@ Further reading : http://lemire.me/blog/2016/06/27/a-fast-alternative-to-the-mod
 
 See also:
 
-* Daniel Lemire, [Fast Random Integer Generation in an Interval](https://arxiv.org/abs/1805.10941), ACM Transactions on Modeling and Computer Simulation (to appear)
+* Daniel Lemire, [Fast Random Integer Generation in an Interval](https://arxiv.org/abs/1805.10941), ACM Transactions on Modeling and Computer Simulation, January 2019 Article No. 3 https://doi.org/10.1145/3230636
 
 
 This library provides a single portable header file that you should
