@@ -27,3 +27,22 @@
 *.exe
 *.out
 *.app
+
+# CMake / build directories
+build/
+build*/
+cmake-build-*/
+CMakeCache.txt
+CMakeFiles/
+CMakeUserPresets.json
+_deps/
+install/
+
+# Test binaries built by the plain Makefiles
+tests/c/tests
+tests/cpp/tests
+
+# Editor / IDE
+.vscode/
+.idea/
+.DS_Store

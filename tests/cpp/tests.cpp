@@ -1,7 +1,9 @@
+// The tests rely on assert, so make sure it stays enabled in release builds.
+#undef NDEBUG
 #include <cassert>
 #include <stdlib.h>
 #include <set>
-#include "../../fastrange.h"
+#include <fastrange.h>
 
 
 /////////////////////
@@ -12,7 +14,7 @@
 /////////////////////
 
 static uint32_t get32rand() {
-    return (rand() ^ (rand() << 15) ^ (rand() << 30));
+    return (uint32_t)(rand() ^ (rand() << 15) ^ (rand() << 30));
 }
 
 static uint64_t get64rand() {
@@ -20,9 +22,9 @@ static uint64_t get64rand() {
 }
 
 void fill(int number) {
-    std::set<int> set;
+    std::set<size_t> set;
     while(set.size() < (size_t) number) {
-        set.insert(fastrangesize(get64rand(), number));
+        set.insert(fastrangesize((size_t)get64rand(), (size_t)number));
     }
 }
 
@@ -30,4 +32,5 @@ int main() {
   for(uint32_t x = 0; x < 1000000; ++x) assert(fastrange32(x,5)<5);
   for(uint64_t x = 0; x < 1000000; ++x) assert(fastrange64(x,5)<5);
   for(int x = 1; x < 1000; ++x) fill(x);
+  return 0;
 }

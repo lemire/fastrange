@@ -1,10 +1,12 @@
+# Standalone build, kept for convenience; the CMake build (see the top-level
+# CMakeLists.txt) is the supported one.
 .SUFFIXES:
 #
 .SUFFIXES: .cpp .o .c .h
 
 
 all: tests.c
-	$(CC) -o tests tests.c -Wall -Wextra
+	$(CC) -o tests tests.c -I../.. -Wall -Wextra
 
 clean:
 	rm -f *.o tests

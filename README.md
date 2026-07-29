@@ -32,7 +32,7 @@ be able to just drop in your C/C++ projects. The API is simple:
 
 
 ```C
-#include "fastrange"
+#include <fastrange.h>
 
 // given a value word, produces an integer in [0,p) without division
 uint32_t fastrange32(uint32_t word, uint32_t p);
@@ -40,6 +40,84 @@ uint64_t fastrange64(uint64_t word, uint64_t p);
 size_t fastrangesize(size_t word, size_t p);
 int fastrangeint(int word, int p);
 ```
+
+All the functions are ``static inline``: there is no library to link
+against, and including the header from several translation units is fine.
+
+## Requirements
+
+A C99 (or better) or C++ compiler with the standard ``<stdint.h>`` types.
+The header is known to work with GCC, Clang, Visual Studio and the Intel
+compiler, on 32-bit and 64-bit systems. On compilers offering a 128-bit
+integer type (GCC, Clang) and on 64-bit Visual Studio, ``fastrange64`` is
+division free; elsewhere it falls back to ``word % p``.
+
+## Usage with CMake
+
+fastrange ships a CMake package. However you obtain it, the target to link
+against is always ``fastrange::fastrange``, which is header only and simply
+adds the header to your include path:
+
+```cmake
+target_link_libraries(your_target PRIVATE fastrange::fastrange)
+```
+
+### With FetchContent (no installation required)
+
+```cmake
+include(FetchContent)
+FetchContent_Declare(fastrange
+  GIT_REPOSITORY https://github.com/lemire/fastrange.git
+  GIT_TAG        master)
+FetchContent_MakeAvailable(fastrange)
+
+target_link_libraries(your_target PRIVATE fastrange::fastrange)
+```
+
+### As a subdirectory (git submodule, vendored copy)
+
+```cmake
+add_subdirectory(third_party/fastrange)
+target_link_libraries(your_target PRIVATE fastrange::fastrange)
+```
+
+### With an installed copy
+
+```sh
+cmake -B build
+cmake --build build
+ctest --test-dir build          # optional
+cmake --install build --prefix /usr/local
+```
+
+then, from your project:
+
+```cmake
+find_package(fastrange 1.0 REQUIRED)
+target_link_libraries(your_target PRIVATE fastrange::fastrange)
+```
+
+If fastrange is installed outside the default search path, point CMake at it
+with ``-DCMAKE_PREFIX_PATH=/path/to/prefix``.
+
+The installation also provides a ``pkg-config`` file for non-CMake build
+systems:
+
+```sh
+cc myprogram.c $(pkg-config --cflags fastrange)
+```
+
+### Build options
+
+| Option | Default | Meaning |
+| --- | --- | --- |
+| ``FASTRANGE_BUILD_TESTS`` | ``ON`` when fastrange is the top-level project, ``OFF`` otherwise | Build the tests and register them with CTest |
+| ``FASTRANGE_INSTALL`` | ``ON`` when fastrange is the top-level project, ``OFF`` otherwise | Generate the install and package-config rules |
+
+Because fastrange has no compiled component, the project declares no
+language: adding it to your build does not force CMake to look for a C or a
+C++ compiler. A compiler is only needed when ``FASTRANGE_BUILD_TESTS`` is on.
+
 ## Pre-conditions
 
 For this code to give the desired result, the provided words should span the whole range (e.g., all 32-bit integers). The C ``rand`` function does not meet this requirement. If you must use the ``rand``  function, wrap it like so:

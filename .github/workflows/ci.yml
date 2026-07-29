@@ -1,0 +1,53 @@
+name: CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configure
+        run: cmake -B build -DCMAKE_BUILD_TYPE=Release
+
+      - name: Build
+        run: cmake --build build --config Release
+
+      - name: Test
+        run: ctest --test-dir build --build-config Release --output-on-failure
+
+      - name: Install
+        run: cmake --install build --config Release --prefix "${{ github.workspace }}/prefix"
+
+      - name: Consume the installed package
+        run: |
+          cmake -S tests/packaging -B build-packaging -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH="${{ github.workspace }}/prefix"
+          cmake --build build-packaging --config Release
+          ctest --test-dir build-packaging --build-config Release --output-on-failure
+
+  build-32bit:
+    name: ubuntu-latest (32-bit)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install 32-bit toolchain
+        run: sudo apt-get update && sudo apt-get install -y gcc-multilib g++-multilib
+
+      # Exercises the 32-bit size_t branch of fastrangesize and the
+      # no-128-bit-integer fallback of fastrange64.
+      - name: Configure, build and test
+        run: |
+          cmake -B build32 -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_FLAGS=-m32 -DCMAKE_CXX_FLAGS=-m32
+          cmake --build build32
+          ctest --test-dir build32 --output-on-failure
